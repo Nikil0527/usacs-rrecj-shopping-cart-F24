@@ -13,7 +13,16 @@ function App() {
     fetch('https://jsonplaceholder.typicode.com/photos?_limit=4')
       .then((response) => response.json())
 
-      // implement fetch interpretation
+      .then((data) => {
+        console.log(data);
+        setProducts(
+          data.map((item) => ({
+            id: item.id,
+            name: item.title,
+            price: (Math.random() * 35).toFixed(2),
+          })
+        ));
+      })
       
 
       // below is the rest of the code
@@ -21,14 +30,13 @@ function App() {
   }, []);
 
   const addToCart = (product) => {
-    // implement adding to cart
+    setCart([...cart, product]);
   };
 
   // FIXED removeFromCart function
   const removeFromCart = (id) => {
-    // Filter out the product with the matching ID
-
-    // implement updates from removing 
+    const updatedCart = cart.filter((product) => product.id !== id); 
+    setCart(updatedCart);
   };
 
   const getTotal = () => {
